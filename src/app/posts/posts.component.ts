@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Post } from '../shared/models/post.model';
-import { getPosts } from './state/posts.actions';
-import { posts, PostState } from './state/posts.state';
+import { PostsService } from './posts.service';
 
 @Component({
   selector: 'app-posts',
@@ -13,21 +11,20 @@ import { posts, PostState } from './state/posts.state';
         {{post.article}}
       </li>
     </ul>
-      posts works!
   `,
   styles: [
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostsComponent implements OnInit {
-  posts$: Observable<Post[]> = this.store.select(posts);
+  posts$!: Observable<Post[]>;
 
-  constructor(private readonly store: Store<PostState>) {
-
+  constructor(private readonly postsService: PostsService) {
+    this.postsService.getPostsAction();
   }
 
   ngOnInit(): void {
-    this.store.dispatch(getPosts());
+    this.posts$ = this.postsService.getAllPosts();
   }
 
 }
