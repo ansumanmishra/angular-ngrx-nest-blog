@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { User } from "../shared/models/user.model";
+import { User } from "../../shared/models/user.model";
 
 export interface UserState {
     users: User[]

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { User } from './shared/models/user.model';
+import { User } from '../shared/models/user.model';
 import { getUser } from './state/user.action';
 import { getUsers } from './state/user.state';
 
