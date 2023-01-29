@@ -9,7 +9,9 @@ export const userInitialState: UserState = {
     users: [],
 }
 
-const getUsersState = createFeatureSelector<UserState>('users');
+export const USERS_STATE_NAME = 'users';
+
+const getUsersState = createFeatureSelector<UserState>(USERS_STATE_NAME);
 
 export const getUsers = createSelector(
     getUsersState,
