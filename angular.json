@@ -7,8 +7,17 @@
   "newProjectRoot": "projects",
   "projects": {
     "angular-ngrx-blog": {
+      "schematics": {
+        "@schematics/angular": {
+          "component": {
+            "changeDetection": "OnPush",
+            "inlineTemplate": true,
+            "inlineStyle": true,
+            "skipTests": true
+          }
+        }
+      },
       "projectType": "application",
-      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
