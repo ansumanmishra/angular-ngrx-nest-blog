@@ -6,6 +6,7 @@ import { PostsService } from './posts.service';
 @Component({
   selector: 'app-posts',
   template: `
+    <h4>Add Post</h4>
     <ul *ngIf="(posts$ | async) as posts">
       <li *ngFor="let post of posts">
         {{post.article}}

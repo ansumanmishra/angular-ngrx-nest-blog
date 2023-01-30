@@ -17,4 +17,3 @@ export const posts = createSelector(
     postsSelector,
     state => state.posts
 );
-

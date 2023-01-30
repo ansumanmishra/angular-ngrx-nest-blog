@@ -11,21 +11,24 @@ import { USERS_STATE_NAME } from './users/state/user.state';
 import { PostsComponent } from './posts/posts.component';
 import { postsReducer } from './posts/state/posts.reducer';
 import { POSTS_STATE_NAME } from './posts/state/posts.state';
+import { ManagePostsComponent } from './posts/manage-posts/manage-posts.component';
+import { appReducer } from './store/app.state';
+import { EffectsModule } from '@ngrx/effects';
+import { PostsEffects } from './posts/state/posts.effects';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    PostsComponent
+    PostsComponent,
+    ManagePostsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StoreModule.forRoot({
-      [USERS_STATE_NAME]: userReducer,
-      [POSTS_STATE_NAME]: postsReducer
-    }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    StoreModule.forRoot(appReducer),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([PostsEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]
