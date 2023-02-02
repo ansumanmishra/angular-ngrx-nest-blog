@@ -1,5 +1,5 @@
 export class Post {
-    constructor(public id: number, public article: string, public desc: string, public userId: number) {
-        
+    constructor(public article: string, public desc: string, public userId: number, public id?: number) {
+
     }
 }

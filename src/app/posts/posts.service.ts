@@ -3,14 +3,19 @@ import { Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { Post } from "../shared/models/post.model";
 import { AppState } from "../store/app.state";
-import { loadPosts } from "./state/posts.actions";
+import { RouterStateUrl } from "../store/router/custom-route-serializer";
+import { getCurrentRoute } from "../store/router/router.selector";
+import { createPost, loadPosts } from "./state/posts.actions";
 import { posts } from "./state/posts.state";
 
+const post1 = new Post('post 1', 'Ngrx rocks!!', 1, 1);
+const post2 = new Post('post 2', 'Angular rocks', 2, 2);
+
+const allPosts: Post[] = [post1, post2];
 @Injectable({
     providedIn: 'root'
 })
 export class PostsService {
-
     constructor(private readonly store: Store<AppState>) {
 
     }
@@ -24,11 +29,27 @@ export class PostsService {
     }
 
     getPostsFromApi(): Observable<Post[]> {
-        const post1 = new Post(1, 'post 1', 'Ngrx rocks!!', 1);
-        const post2 = new Post(2, 'post 2', 'Angular rocks', 2);
+        return of(allPosts);
+    }
 
-        const posts: Post[] = [post1, post2];
+    getRoutes(): Observable<RouterStateUrl> {
+        return this.store.select(getCurrentRoute);
+    }
 
-        return of(posts);
+    addPost(formValue: Post): void {
+        const postId = allPosts.length + 1;
+
+        const post: Post = {
+            article: formValue.article,
+            desc: formValue.desc,
+            userId: 2,
+            id: postId
+        }
+        this.store.dispatch(createPost({post}));
+    }
+
+    createPost(post: Post): Observable<Post[]> {
+        // Here it should call the service add the post and return all the posts
+        return of([...allPosts, post]);
     }
 }

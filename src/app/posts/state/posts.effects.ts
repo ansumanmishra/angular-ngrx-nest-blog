@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { map, mergeMap } from "rxjs";
+import { map, mergeMap, of } from "rxjs";
 import { PostsService } from "../posts.service";
-import { loadPosts, loadPostsSuccess } from "./posts.actions";
+import { createPost, createPostSuccess, loadPosts, loadPostsSuccess } from "./posts.actions";
 
 @Injectable()
 export class PostsEffects {
@@ -27,4 +27,13 @@ export class PostsEffects {
             })
             )
     });
+
+    createPost$ = createEffect( () => {
+        return this.actions$.pipe(
+            ofType(createPost),
+            mergeMap(action => {
+                return of(createPostSuccess({post: action.post}))
+            })
+        )
+    })
 }

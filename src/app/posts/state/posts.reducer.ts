@@ -9,5 +9,11 @@ export const postsReducer = createReducer(
             ...state,
             posts: action.posts
         }
+    }),
+    on(PostPageActions.createPostSuccess, (state, action) => {
+        return {
+            ...state,
+            posts: [...state.posts, action.post]
+        }
     })
 );
