@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, mergeMap, of } from "rxjs";
 import { PostsService } from "../posts.service";
-import { createPost, createPostSuccess, deletePost, deletePostFailure, deletePostSuccess, loadPosts, loadPostsSuccess } from "./posts.actions";
+import { createPostSuccess, deletePost, deletePostFailure, deletePostSuccess, loadPostsSuccess, PostPageActions } from "./posts.actions";
 
 @Injectable()
 export class PostsEffects {
@@ -14,7 +14,7 @@ export class PostsEffects {
     
     loadPosts = createEffect( () => {
         return this.actions$.pipe(
-            ofType(loadPosts),
+            ofType(PostPageActions.loadPosts),
             mergeMap(action => {                
                 return this.postsService.getPostsFromApi().pipe(
                     map(posts => {
@@ -30,7 +30,7 @@ export class PostsEffects {
 
     createPost$ = createEffect( () => {
         return this.actions$.pipe(
-            ofType(createPost),
+            ofType(PostPageActions.createPost),
             mergeMap(action => {
                 return of(createPostSuccess({post: action.post}))
             })

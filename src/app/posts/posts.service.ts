@@ -5,7 +5,7 @@ import { Post } from "../shared/models/post.model";
 import { AppState } from "../store/app.state";
 import { RouterStateUrl } from "../store/router/custom-route-serializer";
 import { getCurrentRoute } from "../store/router/router.selector";
-import { createPost, deletePost, loadPosts } from "./state/posts.actions";
+import { deletePost, PostPageActions } from "./state/posts.actions";
 import { posts, postsError } from "./state/posts.state";
 
 const post1 = new Post('post 1', 'Ngrx rocks!!', 1, 1);
@@ -23,7 +23,7 @@ export class PostsService {
     }
 
     getPostsAction(): void {
-        this.store.dispatch(loadPosts())
+        this.store.dispatch(PostPageActions.loadPosts())
     }
 
     getAllPosts(): Observable<Post[]> {
@@ -47,7 +47,7 @@ export class PostsService {
             userId: 2,
             id: postId
         }
-        this.store.dispatch(createPost({post}));
+        this.store.dispatch(PostPageActions.createPost({post}));
     }
 
     createPost(post: Post): Observable<Post[]> {
