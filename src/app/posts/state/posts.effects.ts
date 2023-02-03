@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { map, mergeMap, of } from "rxjs";
+import { catchError, exhaustMap, map, mergeMap, of } from "rxjs";
 import { PostsService } from "../posts.service";
-import { createPost, createPostSuccess, loadPosts, loadPostsSuccess } from "./posts.actions";
+import { createPost, createPostSuccess, deletePost, deletePostFailure, deletePostSuccess, loadPosts, loadPostsSuccess } from "./posts.actions";
 
 @Injectable()
 export class PostsEffects {
@@ -33,6 +33,26 @@ export class PostsEffects {
             ofType(createPost),
             mergeMap(action => {
                 return of(createPostSuccess({post: action.post}))
+            })
+        )
+    });
+
+    deletePost$ = createEffect( () => {
+        return this.actions$.pipe(
+            ofType(deletePost),
+            exhaustMap( action => {
+                return this.postsService.deletePost(action.id).pipe(
+                    map( data => {
+                        if (data) {
+                            return deletePostSuccess({id: action.id})
+                        } else {
+                            return deletePostFailure({message: 'Something went wrong!'});
+                        }
+                    }),
+                    catchError(_ => {
+                        return of(deletePostFailure({message: 'Something went wrong!'}));
+                    })
+                )
             })
         )
     })

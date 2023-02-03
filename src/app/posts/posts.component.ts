@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, tap } from 'rxjs';
 import { Post } from '../shared/models/post.model';
 import { RouterStateUrl } from '../store/router/custom-route-serializer';
@@ -9,9 +10,10 @@ import { PostsService } from './posts.service';
   selector: 'app-posts',
   template: `
     <h2>Posts</h2>
+    
     <ul *ngIf="(posts$ | async) as posts">
       <li *ngFor="let post of posts">
-        {{post.article}}
+        {{post.article}} - <button mat-button (click)="deletePost(post.id)">Delete</button>
       </li>
     </ul>
 
@@ -31,11 +33,13 @@ import { PostsService } from './posts.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostsComponent implements OnInit {
+
   posts$!: Observable<Post[]>;
   routeDetails$!: Observable<RouterStateUrl>;
   form!: FormGroup;
   
-  constructor(private readonly postsService: PostsService, private readonly fb: FormBuilder) {
+  constructor(private readonly postsService: PostsService, private readonly fb: FormBuilder,
+    private readonly snackBar: MatSnackBar) {
     this.postsService.getPostsAction();
   }
 
@@ -46,12 +50,21 @@ export class PostsComponent implements OnInit {
     this.form = this.fb.group({
       article: [''],
       desc: [''],
-    })
+    });
+
+    this.postsService.postMessage$.subscribe( msg => {
+      console.log(msg);
+      this.snackBar.open(msg!);
+    });
   }
 
   createPost() {
     const formValue: Post = this.form.value;
     this.postsService.addPost(formValue);
+  }
+
+  deletePost(id: number | undefined) {
+    this.postsService.handleDeletePost(id);
   }
 
 }

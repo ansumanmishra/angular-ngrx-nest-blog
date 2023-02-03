@@ -9,7 +9,14 @@ const CREATE_POST = '[Post API] Create Post';
 const CREATE_POST_SUCCESS = '[Post Page] Create Post Success';
 const CREATE_POST_FAILURE = '[Post Page] Create Post Failure';
 
+const DELETE_POST = '[Post API] Delete Post';
+const DELETE_POST_SUCCESS = '[Post Page] Delete Post Success';
+const DELETE_POST_FAILURE = '[Post API] Delete Post Failure';
+
 export const loadPosts = createAction(LOAD_POSTS);
 export const loadPostsSuccess = createAction(LOAD_POSTS_SUCCESS, props<{posts: Post[]}>());
 export const createPost = createAction(CREATE_POST, props<{post: Post}>());
 export const createPostSuccess = createAction(CREATE_POST_SUCCESS, props<{post: Post}>());
+export const deletePost = createAction(DELETE_POST, props<{id: number}>());
+export const deletePostSuccess = createAction(DELETE_POST_SUCCESS, props<{id: number}>());
+export const deletePostFailure = createAction(DELETE_POST_FAILURE, props<{message: string}>());
