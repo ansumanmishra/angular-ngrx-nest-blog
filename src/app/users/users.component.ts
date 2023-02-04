@@ -10,6 +10,7 @@ import { getUsers } from './state/user.state';
 @Component({
   selector: 'app-users',
   template: `
+    <h2>Users</h2>
     <ul *ngIf="users$ | async as users">
       <li *ngFor="let user of users">{{user.name}}</li>
     </ul>

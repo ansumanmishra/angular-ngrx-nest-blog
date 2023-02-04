@@ -8,8 +8,8 @@ import { getCurrentRoute } from "../store/router/router.selector";
 import { deletePost, PostPageActions } from "./state/posts.actions";
 import { posts, postsError } from "./state/posts.state";
 
-const post1 = new Post('post 1', 'Ngrx rocks!!', 1, 1);
-const post2 = new Post('post 2', 'Angular rocks', 2, 2);
+const post1 = new Post('Angular v15 is now available!', `Over the past year we removed Angular’s legacy compiler and rendering pipeline which enabled the development of a series of developer experience improvements in the past couple of months. Angular v15 is the culmination of this with dozens of refinements which lead to better developer experience and performance.`, 1, 1);
+const post2 = new Post('Advancements in the Angular Router', `The Angular team has been busy making some meaningful updates to the Angular router that are available as of Angular v14.2. We’re pleased to share some recent improvements. Read on to learn more.`, 2, 2);
 
 const allPosts: Post[] = [post1, post2];
 @Injectable({
@@ -61,7 +61,7 @@ export class PostsService {
     }
 
     deletePost(id: number): Observable<boolean> {
-        return of(false);
+        return of(true);
     }
 
 }

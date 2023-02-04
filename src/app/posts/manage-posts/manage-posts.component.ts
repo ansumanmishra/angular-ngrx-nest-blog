@@ -11,6 +11,7 @@ import { PostsService } from '../posts.service';
       <textarea name="" id="" cols="30" rows="10" formControlName="desc"></textarea>
       <button mat-button type="submit">CREATE</button>
     </form>
+    
   `,
   styles: [
   ],
@@ -27,12 +28,11 @@ export class ManagePostsComponent implements OnInit {
     this.form = this.fb.group({
       article: [''],
       desc: [''],
-    })
+    });
   }
 
   createPost() {
     const formValue: Post = this.form.value;
-    
-    this.postsService.createPost(formValue);
+    this.postsService.addPost(formValue);
   }
 }

@@ -8,6 +8,7 @@ export const postsReducer = createReducer(
         return {
             ...state,
             posts: action.posts,
+            postMesage: null
         }
     }),
     on(PostPageActions.createPostSuccess, (state, action) => {
@@ -20,7 +21,8 @@ export const postsReducer = createReducer(
     on(PostPageActions.deletePostSuccess, (state, {id}) => {
         return {
             ...state,
-            posts: state.posts.filter(post => post.id !== id)
+            posts: state.posts.filter(post => post.id !== id),
+            postMesage: 'Post deleted successfully'
         }
     }),
     on(PostPageActions.deletePostFailure, (state, action) => {
