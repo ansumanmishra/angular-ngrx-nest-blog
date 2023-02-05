@@ -1,31 +1,26 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { map, of, switchMap } from "rxjs";
+import { catchError, map, of, switchMap } from "rxjs";
 import { User } from "src/app/shared/models/user.model";
+import { UserService } from "../user.service";
 
 import * as UserActions from './user.action';
 
 @Injectable()
 export class UserEffects {
-    constructor(private readonly actions$: Actions) {}
+    constructor(private readonly actions$: Actions, private userService: UserService) {}
 
     loadUsers$ = createEffect( () => {
         return this.actions$.pipe(
             ofType(UserActions.loadUser),
             switchMap( (action) => {            
-                const users: User[] = [
-                    {
-                    name: 'bryan',
-                    age: 25
-                    },
-                    {
-                    name: 'nicole',
-                    age: 26
-                    }
-                ]
-                return of(users).pipe(
+                return this.userService.getUsers().pipe(
                     map( (users) => {
                         return UserActions.loadUsersSuccess({users})
+                    }),
+                    catchError(err => {
+                        console.error('Something went wrong!')
+                        return of(UserActions.dummyAction());
                     })
                 )
             })
