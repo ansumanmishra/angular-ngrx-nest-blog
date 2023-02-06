@@ -3,8 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, of, switchMap } from "rxjs";
 import { User } from "src/app/shared/models/user.model";
 import { UserService } from "../user.service";
-
-import * as UserActions from './user.action';
+import { dummyAction, loadUser, loadUsersSuccess, userActions } from "./user.action";
 
 @Injectable()
 export class UserEffects {
@@ -12,18 +11,30 @@ export class UserEffects {
 
     loadUsers$ = createEffect( () => {
         return this.actions$.pipe(
-            ofType(UserActions.loadUser),
+            ofType(loadUser),
             switchMap( (action) => {            
                 return this.userService.getUsers().pipe(
                     map( (users) => {
-                        return UserActions.loadUsersSuccess({users})
+                        return loadUsersSuccess({users})
                     }),
                     catchError(err => {
                         console.error('Something went wrong!')
-                        return of(UserActions.dummyAction());
+                        return of(dummyAction());
                     })
                 )
             })
         )
     });
+
+    createUser$ = createEffect( () => {
+        return this.actions$.pipe(
+            ofType(userActions.addUserEnter),
+            switchMap(action => {
+                return this.userService.createUser(action.user).pipe(
+                    map(data => userActions.addUserSuccess({user: action.user}))
+                )
+            })
+        )
+    });
+    
 }

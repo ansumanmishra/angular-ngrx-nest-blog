@@ -15,12 +15,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/material.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddUserComponent } from './users/add-user/add-user.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    HeaderComponent
+    HeaderComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer
     }),
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule
   ],

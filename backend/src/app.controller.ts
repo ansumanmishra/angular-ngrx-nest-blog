@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -8,5 +8,10 @@ export class AppController {
   @Get()
   getUsers(): {name: string; age: number}[] {
     return this.appService.getUsers();
+  }
+
+  @Post('createUser')
+  async createUser(@Body() body) {
+    return this.appService.createUser(body.user);
   }
 }
