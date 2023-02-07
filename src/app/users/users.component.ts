@@ -6,10 +6,12 @@ import { User } from '../shared/models/user.model';
 import { AppState } from '../store/app.state';
 import { loadUser } from './state/user.action';
 import { getUsers } from './state/user.state';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-users',
   template: `
+    <button mat-button routerLink="/add-user">Add New User</button>
     <mat-table class="table" [dataSource]="dataSource$">
       <ng-container matColumnDef="number">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
@@ -59,9 +61,9 @@ import { getUsers } from './state/user.state';
 export class UsersComponent {
 
   displayedColumns = ['number', 'name', 'age', 'viewPosts'];
-  dataSource$: Observable<User[]> = this.store.select(getUsers);
+  dataSource$: Observable<User[]> = this.userService.users$;
 
-  constructor(private readonly store: Store<AppState>) {
+  constructor(private readonly store: Store<AppState>, private readonly userService: UserService) {
     this.store.dispatch(loadUser());
   }
 

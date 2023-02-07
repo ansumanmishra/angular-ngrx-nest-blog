@@ -5,12 +5,14 @@ import { Observable } from "rxjs";
 import { User } from "../shared/models/user.model";
 import { AppState } from "../store/app.state";
 import { userActions } from "./state/user.action";
+import { getUsers } from "./state/user.state";
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-
+    users$ = this.store.select(getUsers);
+    
     constructor(private readonly http: HttpClient, private readonly store: Store<AppState>) {
 
     }

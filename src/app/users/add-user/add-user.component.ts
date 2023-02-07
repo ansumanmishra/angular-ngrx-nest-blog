@@ -5,6 +5,7 @@ import { UserService } from '../user.service';
 @Component({
   selector: 'app-add-user',
   template: `
+    <button routerLink="/user" mat-button>Back</button>
     <form [formGroup]="addUserForm" class="form-container">
       <mat-form-field>
         <input matInput placeholder="Name" formControlName="name">
