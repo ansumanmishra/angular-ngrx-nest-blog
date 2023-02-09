@@ -1,34 +1,46 @@
 import { createReducer, on } from "@ngrx/store";
-import * as PostPageActions from "./posts.actions";
+import { createPostSuccess, deletePostFailure, deletePostSuccess, loadPostsSuccess, PostPageActions } from "./posts.actions";
 import { initialStatePosts, posts } from "./posts.state";
 
 export const postsReducer = createReducer(
     initialStatePosts,
-    on(PostPageActions.loadPostsSuccess, (state, action) => {
+    on(loadPostsSuccess, (state, action) => {
         return {
             ...state,
             posts: action.posts,
             postMesage: null
         }
     }),
-    on(PostPageActions.createPostSuccess, (state, action) => {
+    on(createPostSuccess, (state, action) => {
         return {
             ...state,
             posts: [...state.posts, action.post],
             postMesage: 'Post created successfully'
         }
     }),
-    on(PostPageActions.deletePostSuccess, (state, {id}) => {
+    on(deletePostSuccess, (state, {id}) => {
         return {
             ...state,
             posts: state.posts.filter(post => post.id !== id),
             postMesage: 'Post deleted successfully'
         }
     }),
-    on(PostPageActions.deletePostFailure, (state, action) => {
+    on(deletePostFailure, (state, action) => {
         return {
             ...state,
             postMesage: action.message
+        }
+    }),
+    on(PostPageActions.editPostEnter, (state, action) => {
+        return {
+            ...state,
+            selectedPostId: action.post.id || 0
+        }
+    }),
+    on(PostPageActions.cancelEdit, (state, action) => {
+        return {
+            ...state,
+            selectedPostId: 0
         }
     })
 );

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { Post } from '../shared/models/post.model';
 
 import { User } from '../shared/models/user.model';
 import { AppState } from '../store/app.state';
@@ -63,11 +65,14 @@ export class UsersComponent {
   displayedColumns = ['number', 'name', 'age', 'viewPosts'];
   dataSource$: Observable<User[]> = this.userService.users$;
 
-  constructor(private readonly store: Store<AppState>, private readonly userService: UserService) {
+  constructor(private readonly store: Store<AppState>, private readonly userService: UserService,
+    private readonly router: Router) {
     this.store.dispatch(loadUser());
   }
 
-  viewPosts(_t45: any) {
-    throw new Error('Method not implemented.');
+  viewPosts(user: User) {
+    // console.log(post);
+    
+    //this.router.navigate(['posts', {id: user.}]);
   }
 }

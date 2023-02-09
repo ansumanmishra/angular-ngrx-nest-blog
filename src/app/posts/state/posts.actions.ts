@@ -26,6 +26,10 @@ export const PostPageActions = createActionGroup({
     source: 'Post Page',
     events: {
         'Load Posts': emptyProps(),
-        'Create Post': props<{post: Post}>()
+        'Create Post': props<{post: Post}>(),
+        'Edit Post Enter': props<{post: Post}>(),
+        'Edit Post Success': props<{post: Post}>(),
+        'Edit Post Failure': props<{message: string}>(),
+        'Cancel Edit': emptyProps()
     }
 })

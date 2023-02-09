@@ -13,7 +13,7 @@ const routes: Routes = [
     component: AddUserComponent
   },
   {
-    path: '',
+    path: 'posts',
     loadChildren: () => import('./posts/posts.module').then( m => m.PostsModule)
   }
 ];

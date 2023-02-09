@@ -17,8 +17,6 @@ import { HeaderComponent } from './layout/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import * as fromAdmin from './admin.reducer';
-import { AdminEffects } from './admin.effects';
 
 @NgModule({
   declarations: [
@@ -41,8 +39,6 @@ import { AdminEffects } from './admin.effects';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    StoreModule.forFeature(fromAdmin.adminFeatureKey, fromAdmin.reducer),
-    EffectsModule.forFeature([AdminEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]
