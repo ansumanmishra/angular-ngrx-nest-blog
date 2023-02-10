@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from 'src/app/shared/models/post.model';
 
 @Component({
@@ -40,7 +40,7 @@ import { Post } from 'src/app/shared/models/post.model';
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button type="submit">
+          <button mat-button type="submit" [disabled]="!form.valid">
             {{ selectedPost ? 'EDIT' : 'CREATE' }}
           </button>
           <button mat-button type="button" (click)="cancelEditPost()">
@@ -78,8 +78,8 @@ export class ManagePostsComponent implements OnInit, OnChanges {
   createForm(): void {
     this.form = this.fb.group({
       id: [''],
-      article: [''],
-      desc: [''],
+      article: ['', Validators.required],
+      desc: ['', Validators.required],
     });
   }
 
@@ -102,6 +102,12 @@ export class ManagePostsComponent implements OnInit, OnChanges {
   createPost() {
     const formValue: Post = this.form.value;
     this.createPostEvent.emit(formValue);
+
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.form.reset();
   }
 
   cancelEditPost() {

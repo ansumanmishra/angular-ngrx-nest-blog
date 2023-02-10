@@ -1,5 +1,10 @@
-import { createAction, createActionGroup, emptyProps, props } from "@ngrx/store";
-import { Post } from "src/app/shared/models/post.model";
+import {
+  createAction,
+  createActionGroup,
+  emptyProps,
+  props,
+} from '@ngrx/store';
+import { Post } from 'src/app/shared/models/post.model';
 
 const LOAD_POSTS = '[Post Page] Load Posts';
 const LOAD_POSTS_SUCCESS = '[Post Page] Load Posts Success';
@@ -14,22 +19,38 @@ const DELETE_POST_SUCCESS = '[Post Page] Delete Post Success';
 const DELETE_POST_FAILURE = '[Post API] Delete Post Failure';
 
 // export const loadPosts = createAction(LOAD_POSTS);
-export const loadPostsSuccess = createAction(LOAD_POSTS_SUCCESS, props<{posts: Post[]}>());
+export const loadPostsSuccess = createAction(
+  LOAD_POSTS_SUCCESS,
+  props<{ posts: Post[] }>()
+);
 // export const createPost = createAction(CREATE_POST, props<{post: Post}>());
-export const createPostSuccess = createAction(CREATE_POST_SUCCESS, props<{post: Post}>());
-export const deletePost = createAction(DELETE_POST, props<{id: number}>());
-export const deletePostSuccess = createAction(DELETE_POST_SUCCESS, props<{id: number}>());
-export const deletePostFailure = createAction(DELETE_POST_FAILURE, props<{message: string}>());
+export const createPostSuccess = createAction(
+  CREATE_POST_SUCCESS,
+  props<{ posts: Post[]; message: string }>()
+);
+export const createPostFailure = createAction(
+  CREATE_POST_FAILURE,
+  props<{ message: string }>()
+);
+export const deletePost = createAction(DELETE_POST, props<{ id: number }>());
+export const deletePostSuccess = createAction(
+  DELETE_POST_SUCCESS,
+  props<{ id: number }>()
+);
+export const deletePostFailure = createAction(
+  DELETE_POST_FAILURE,
+  props<{ message: string }>()
+);
 
 // Creating actions using createActionGroup API
 export const PostPageActions = createActionGroup({
-    source: 'Post Page',
-    events: {
-        'Load Posts': emptyProps(),
-        'Create Post': props<{post: Post}>(),
-        'Edit Post Enter': props<{post: Post}>(),
-        'Edit Post Success': props<{post: Post}>(),
-        'Edit Post Failure': props<{message: string}>(),
-        'Cancel Edit': emptyProps()
-    }
-})
+  source: 'Post Page',
+  events: {
+    'Load Posts': emptyProps(),
+    'Create Post': props<{ post: Post }>(),
+    'Edit Post Enter': props<{ post: Post }>(),
+    'Edit Post Success': props<{ post: Post }>(),
+    'Edit Post Failure': props<{ message: string }>(),
+    'Cancel Edit': emptyProps(),
+  },
+});
