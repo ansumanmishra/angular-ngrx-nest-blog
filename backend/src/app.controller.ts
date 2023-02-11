@@ -10,6 +10,11 @@ export class AppController {
     return this.appService.getUsers();
   }
 
+  @Get('user/:id')
+  getUserById(@Param() param): any {
+    return this.appService.getUserById(param.id);
+  }
+
   @Post('createUser')
   async createUser(@Body() body) {
     return this.appService.createUser(body.user);

@@ -6,20 +6,25 @@ import { UsersComponent } from './users/users.component';
 const routes: Routes = [
   {
     path: 'user',
-    component: UsersComponent
+    component: UsersComponent,
   },
   {
     path: 'add-user',
-    component: AddUserComponent
+    component: AddUserComponent,
+  },
+  {
+    path: 'edit-user/:id',
+    component: AddUserComponent,
   },
   {
     path: 'posts',
-    loadChildren: () => import('./posts/posts.module').then( m => m.PostsModule)
-  }
+    loadChildren: () =>
+      import('./posts/posts.module').then((m) => m.PostsModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -33,4 +33,8 @@ export class UserService {
       { user }
     );
   }
+
+  getSelectedUser(id: number): Observable<User> {
+    return this.http.get<User>(environment.baseUrl + '/user/' + id);
+  }
 }
