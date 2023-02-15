@@ -13,7 +13,7 @@ export const userReducer = createReducer(
   on(userActions.addUserSuccess, (state, action) => {
     return {
       ...state,
-      users: [...state.users, action.user],
+      users: [...action.users],
     };
   }),
   on(userActions.getSelectedUserSuccess, (state, action) => {

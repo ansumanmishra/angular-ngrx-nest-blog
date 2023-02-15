@@ -13,7 +13,7 @@ import { UserService } from '../user.service';
 @Component({
   selector: 'app-users',
   template: `
-    <button mat-button routerLink="/add-user">Add New User</button>
+    <button mat-button routerLink="/users/add">Add New User</button>
     <mat-table class="table" [dataSource]="dataSource$">
       <ng-container matColumnDef="number">
         <mat-header-cell *matHeaderCellDef> # </mat-header-cell>

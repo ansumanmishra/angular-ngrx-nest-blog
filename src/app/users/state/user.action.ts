@@ -19,7 +19,7 @@ export const userActions = createActionGroup({
   source: 'Users Page',
   events: {
     'Add User Enter': props<{ user: User }>(),
-    'Add User Success': props<{ user: User }>(),
+    'Add User Success': props<{ users: User[] }>(),
     'Add User Failure': props<{ error: string }>(),
     'Get Selected User': emptyProps(),
     'Get Selected User Success': props<{ user: User }>(),

@@ -123,6 +123,7 @@ export class AppService {
   }
 
   createUser(user: any) {
+    user.id = users.length + 1;
     users.push(user);
 
     return users;

@@ -31,11 +31,10 @@ export class UserService {
     }
   }
 
-  createUser(user: User): Observable<{ created: boolean }> {
-    return this.http.post<{ created: true }>(
-      environment.baseUrl + '/createUser',
-      { user }
-    );
+  createUser(user: User): Observable<User[]> {
+    return this.http.post<User[]>(environment.baseUrl + '/createUser', {
+      user,
+    });
   }
 
   editUser(user: User): Observable<{ updated: boolean }> {
