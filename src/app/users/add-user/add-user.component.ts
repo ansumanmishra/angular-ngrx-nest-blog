@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { CommonService } from 'src/app/shared/services/common.service';
 import { AppState } from 'src/app/store/app.state';
 import { userActions } from '../state/user.action';
 import { getSelectedUser } from '../state/user.state';
@@ -18,14 +19,27 @@ import { UserService } from '../user.service';
       <mat-form-field>
         <input matInput placeholder="Age" formControlName="age" />
       </mat-form-field>
+      <ng-container *ngIf="userId$ | async as userId; else addUserBlock">
+        <button
+          mat-raised-button
+          (click)="addEditUser(userId)"
+          [disabled]="!addUserForm.valid"
+        >
+          Edit User
+        </button>
+      </ng-container>
 
-      <button
-        mat-raised-button
-        (click)="addUser()"
-        [disabled]="!addUserForm.valid"
-      >
-        Add User
-      </button>
+      <ng-template #addUserBlock>
+        <button
+          mat-raised-button
+          (click)="addEditUser()"
+          [disabled]="!addUserForm.valid"
+        >
+          Add User
+        </button>
+      </ng-template>
+
+      <button mat-raised-button routerLink="/users">Cancel</button>
     </form>
   `,
   styles: [
@@ -41,10 +55,12 @@ import { UserService } from '../user.service';
 })
 export class AddUserComponent implements OnInit {
   addUserForm: FormGroup;
+  userId$ = this.commonService.userId$;
 
   constructor(
     private formBuilder: FormBuilder,
     private readonly userService: UserService,
+    private readonly commonService: CommonService,
     private store: Store<AppState>
   ) {
     this.addUserForm = this.formBuilder.group({
@@ -55,7 +71,7 @@ export class AddUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(userActions.getSelectedUser({ id: 3 }));
+    this.store.dispatch(userActions.getSelectedUser());
 
     this.store.select(getSelectedUser).subscribe((user) => {
       if (user) {
@@ -68,8 +84,8 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  addUser() {
-    this.userService.addUserEnter(this.addUserForm.value);
+  addEditUser(userId?: number) {
+    this.userService.addEditUserEnter(this.addUserForm.value, userId);
     this.addUserForm.reset();
   }
 }

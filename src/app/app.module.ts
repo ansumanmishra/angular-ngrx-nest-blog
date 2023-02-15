@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { appReducer } from './store/app.state';
 import { UserEffects } from './users/state/user.effects';
-import { UsersComponent } from './users/users.component';
+import { UsersComponent } from './users/list-users/users.component';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './store/router/custom-route-serializer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,13 +17,15 @@ import { HeaderComponent } from './layout/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserContainerComponent } from './users/user-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
+    UserContainerComponent,
     HeaderComponent,
-    AddUserComponent
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([UserEffects]),
     StoreRouterConnectingModule.forRoot({
-      serializer: CustomSerializer
+      serializer: CustomSerializer,
     }),
     FormsModule,
     ReactiveFormsModule,
@@ -41,6 +43,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

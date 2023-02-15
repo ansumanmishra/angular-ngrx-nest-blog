@@ -21,5 +21,21 @@ export const userReducer = createReducer(
       ...state,
       selectedUser: action.user,
     };
+  }),
+  on(userActions.editUserSuccess, (state, action) => {
+    return {
+      ...state,
+      users: state.users.map((user) => {
+        if (user.id === action.user.id) {
+          return {
+            ...user,
+            name: action.user.name,
+            age: action.user.age,
+          };
+        } else {
+          return user;
+        }
+      }),
+    };
   })
 );

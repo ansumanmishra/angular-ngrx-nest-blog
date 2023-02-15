@@ -127,4 +127,16 @@ export class AppService {
 
     return users;
   }
+
+  editUser(user: any) {
+    const isUserExist = users.find((p) => p.id === user.id);
+    if (isUserExist) {
+      isUserExist.name = user.name;
+      isUserExist.age = user.age;
+    } else {
+      throw Error('User not present!');
+    }
+
+    return { updated: true };
+  }
 }

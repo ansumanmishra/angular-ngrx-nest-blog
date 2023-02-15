@@ -85,11 +85,27 @@ export class UserEffects {
     );
   });
 
+  editUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(userActions.editUserEnter),
+      exhaustMap((action) => {
+        return this.userService.editUser(action.user).pipe(
+          map((data) => {
+            return userActions.editUserSuccess({ user: action.user });
+          }),
+          catchError((err) =>
+            of(userActions.editUserFailure({ error: 'Failed to update user' }))
+          )
+        );
+      })
+    );
+  });
+
   redirectUser$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(userActions.addUserSuccess),
-        tap((_) => this.router.navigate(['/user']))
+        ofType(userActions.addUserSuccess, userActions.editUserSuccess),
+        tap((_) => this.router.navigate(['/users']))
       );
     },
     { dispatch: false }

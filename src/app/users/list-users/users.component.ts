@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Post } from '../shared/models/post.model';
+import { Post } from '../../shared/models/post.model';
 
-import { User } from '../shared/models/user.model';
-import { AppState } from '../store/app.state';
-import { loadUser } from './state/user.action';
-import { getUsers } from './state/user.state';
-import { UserService } from './user.service';
+import { User } from '../../shared/models/user.model';
+import { AppState } from '../../store/app.state';
+import { loadUser } from '../state/user.action';
+import { getUsers } from '../state/user.state';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-users',
@@ -96,7 +96,7 @@ export class UsersComponent {
   }
 
   editUser(id: string) {
-    this.router.navigate(['edit-user', id]);
+    this.router.navigate(['users/edit', id]);
   }
 
   deleteUser(id: string) {}

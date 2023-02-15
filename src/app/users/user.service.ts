@@ -23,8 +23,12 @@ export class UserService {
     return this.http.get<User[]>(environment.baseUrl + '/users');
   }
 
-  addUserEnter(user: User) {
-    this.store.dispatch(userActions.addUserEnter({ user }));
+  addEditUserEnter(user: User, userId?: number) {
+    if (user.id) {
+      this.store.dispatch(userActions.editUserEnter({ user }));
+    } else {
+      this.store.dispatch(userActions.addUserEnter({ user }));
+    }
   }
 
   createUser(user: User): Observable<{ created: boolean }> {
@@ -32,6 +36,12 @@ export class UserService {
       environment.baseUrl + '/createUser',
       { user }
     );
+  }
+
+  editUser(user: User): Observable<{ updated: boolean }> {
+    return this.http.put<{ updated: true }>(environment.baseUrl + '/editUser', {
+      user,
+    });
   }
 
   getSelectedUser(id: number): Observable<User> {
