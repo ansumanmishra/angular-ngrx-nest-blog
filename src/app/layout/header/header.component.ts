@@ -19,7 +19,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
           mat-button
           class="example-icon"
           aria-label="Articles"
-          routerLink=""
+          routerLink="posts"
         >
           Articles
         </button>

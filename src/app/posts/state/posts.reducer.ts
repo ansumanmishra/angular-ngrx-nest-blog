@@ -6,7 +6,7 @@ import {
   loadPostsSuccess,
   PostPageActions,
 } from './posts.actions';
-import { initialStatePosts, posts } from './posts.state';
+import { initialStatePosts } from './posts.state';
 
 export const postsReducer = createReducer(
   initialStatePosts,

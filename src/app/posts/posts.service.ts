@@ -8,12 +8,16 @@ import { AppState } from '../store/app.state';
 import { RouterStateUrl } from '../store/router/custom-route-serializer';
 import { getCurrentRoute } from '../store/router/router.selector';
 import { deletePost, PostPageActions } from './state/posts.actions';
-import { posts, postsError, selectedPost } from './state/posts.state';
+import {
+  selectedPost,
+  selectPostMesage,
+  selectPosts,
+} from './state/posts.state';
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  postMessage$ = this.store.select(postsError);
+  postMessage$ = this.store.select(selectPostMesage);
   selectedPost$ = this.store.select(selectedPost);
 
   constructor(
@@ -26,7 +30,7 @@ export class PostsService {
   }
 
   getAllPosts(): Observable<Post[]> {
-    return this.store.select(posts);
+    return this.store.select(selectPosts);
   }
 
   getPostsFromApi(): Observable<Post[]> {
