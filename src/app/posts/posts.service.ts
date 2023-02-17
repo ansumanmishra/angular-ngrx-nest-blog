@@ -12,7 +12,7 @@ import {
   selectedPost,
   selectPostMesage,
   selectPosts,
-} from './state/posts.state';
+} from './state/posts.selector';
 @Injectable({
   providedIn: 'root',
 })

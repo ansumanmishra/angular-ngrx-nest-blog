@@ -1,4 +1,5 @@
-import { createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, on } from '@ngrx/store';
+import { Post } from 'src/app/shared/models/post.model';
 import {
   createPostSuccess,
   deletePostFailure,
@@ -6,9 +7,22 @@ import {
   loadPostsSuccess,
   PostPageActions,
 } from './posts.actions';
-import { initialStatePosts } from './posts.state';
 
-export const postsReducer = createReducer(
+export const POSTS_STATE_NAME = 'posts';
+
+export interface PostState {
+  posts: Post[];
+  postMesage: string | null;
+  selectedPostId: number;
+}
+
+export const initialStatePosts: PostState = {
+  posts: [],
+  postMesage: null,
+  selectedPostId: 0,
+};
+
+const postsReducer = createReducer(
   initialStatePosts,
   on(loadPostsSuccess, (state, action) => {
     return {
@@ -51,3 +65,8 @@ export const postsReducer = createReducer(
     };
   })
 );
+
+export const postsFeature = createFeature({
+  name: POSTS_STATE_NAME,
+  reducer: postsReducer,
+});

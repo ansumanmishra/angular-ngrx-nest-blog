@@ -8,7 +8,7 @@ import { MaterialModule } from '../shared/material.module';
 import { ManagePostsComponent } from './manage-posts/manage-posts.component';
 import { PostsComponent } from './posts.component';
 import { PostsEffects } from './state/posts.effects';
-import { postsFeature } from './state/posts.state';
+import { postsFeature } from './state/posts.reducer';
 
 const routes: Routes = [
   {
