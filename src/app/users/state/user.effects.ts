@@ -78,7 +78,7 @@ export class UserEffects {
       exhaustMap((action) => {
         return this.userService
           .createUser(action.user)
-          .pipe(map((data) => userActions.addUserSuccess({ users: data })));
+          .pipe(map((data) => userActions.addUserSuccess({ user: data })));
       })
     );
   });

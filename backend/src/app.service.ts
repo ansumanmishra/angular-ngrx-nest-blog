@@ -126,7 +126,7 @@ export class AppService {
     user.id = users.length + 1;
     users.push(user);
 
-    return users;
+    return user;
   }
 
   editUser(user: any) {

@@ -31,8 +31,8 @@ export class UserService {
     }
   }
 
-  createUser(user: User): Observable<User[]> {
-    return this.http.post<User[]>(environment.baseUrl + '/createUser', {
+  createUser(user: User): Observable<User> {
+    return this.http.post<User>(environment.baseUrl + '/createUser', {
       user,
     });
   }
