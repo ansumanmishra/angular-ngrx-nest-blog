@@ -23,7 +23,7 @@ import {
   loadUsersSuccess,
   userActions,
 } from './user.action';
-import { getUsers } from './user.state';
+import { selectAllUsers } from './user.state';
 
 @Injectable()
 export class UserEffects {
@@ -37,7 +37,7 @@ export class UserEffects {
   loadUsers$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadUser),
-      withLatestFrom(this.store.select(getUsers)),
+      withLatestFrom(this.store.select(selectAllUsers)),
       filter(([action, users]) => !users || users.length === 0),
       switchMap(([action, users]) => {
         return this.userService.getUsers().pipe(

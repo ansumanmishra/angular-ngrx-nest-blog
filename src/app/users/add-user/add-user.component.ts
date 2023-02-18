@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { CommonService } from 'src/app/shared/services/common.service';
 import { AppState } from 'src/app/store/app.state';
 import { userActions } from '../state/user.action';
-import { getSelectedUser } from '../state/user.state';
+import { selectedUser } from '../state/user.state';
 import { UserService } from '../user.service';
 
 @Component({
@@ -73,7 +73,7 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(userActions.getSelectedUser());
 
-    this.store.select(getSelectedUser).subscribe((user) => {
+    this.store.select(selectedUser).subscribe((user) => {
       if (user) {
         this.addUserForm.setValue({
           id: user.id,

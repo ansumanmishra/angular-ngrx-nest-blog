@@ -7,7 +7,12 @@ import { Post } from '../../shared/models/post.model';
 import { User } from '../../shared/models/user.model';
 import { AppState } from '../../store/app.state';
 import { loadUser } from '../state/user.action';
-import { getUsers } from '../state/user.state';
+import {
+  selectAll,
+  selectAllUsers,
+  selectTotal,
+  UserState,
+} from '../state/user.state';
 import { UserService } from '../user.service';
 
 @Component({
@@ -83,7 +88,7 @@ export class UsersComponent {
   dataSource$: Observable<User[]> = this.userService.users$;
 
   constructor(
-    private readonly store: Store<AppState>,
+    private readonly store: Store<UserState>,
     private readonly userService: UserService,
     private readonly router: Router
   ) {

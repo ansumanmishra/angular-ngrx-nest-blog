@@ -7,16 +7,13 @@ import {
   loadPostsSuccess,
   PostPageActions,
 } from './posts.actions';
-
-export const POSTS_STATE_NAME = 'posts';
-
-export interface PostState {
+interface PostState {
   posts: Post[];
   postMesage: string | null;
   selectedPostId: number;
 }
 
-export const initialStatePosts: PostState = {
+const initialStatePosts: PostState = {
   posts: [],
   postMesage: null,
   selectedPostId: 0,
@@ -67,6 +64,6 @@ const postsReducer = createReducer(
 );
 
 export const postsFeature = createFeature({
-  name: POSTS_STATE_NAME,
+  name: 'posts',
   reducer: postsReducer,
 });

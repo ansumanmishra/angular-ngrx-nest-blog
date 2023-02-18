@@ -1,26 +1,25 @@
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { User } from '../../shared/models/user.model';
 
-export interface UserState {
-  users: User[];
+export interface UserState extends EntityState<User> {
   selectedUser: User | undefined;
 }
 
-export const userInitialState: UserState = {
-  users: [],
+export const adapter: EntityAdapter<User> = createEntityAdapter<User>();
+
+export const userInitialState: UserState = adapter.getInitialState({
   selectedUser: undefined,
-};
+});
 
 export const USERS_STATE_NAME = 'users';
 
 const getUsersState = createFeatureSelector<UserState>(USERS_STATE_NAME);
 
-export const getUsers = createSelector(
-  getUsersState,
-  (state: UserState) => state.users
-);
+export const { selectIds, selectEntities, selectAll, selectTotal } =
+  adapter.getSelectors();
 
-export const getSelectedUser = createSelector(
-  getUsersState,
-  (state: UserState) => state.selectedUser
-);
+export const getSelectedUserId = (state: UserState) => state.selectedUser;
+
+export const selectAllUsers = createSelector(getUsersState, selectAll);
+export const selectedUser = createSelector(getUsersState, getSelectedUserId);
