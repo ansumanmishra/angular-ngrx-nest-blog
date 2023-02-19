@@ -1,4 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { Features } from 'src/app/shared/models/features.model';
 import { Post } from 'src/app/shared/models/post.model';
 import {
   createPostSuccess,
@@ -64,6 +65,6 @@ const postsReducer = createReducer(
 );
 
 export const postsFeature = createFeature({
-  name: 'posts',
+  name: Features.Post,
   reducer: postsReducer,
 });

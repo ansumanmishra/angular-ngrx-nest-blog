@@ -1,5 +1,6 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Features } from 'src/app/shared/models/features.model';
 import { User } from '../../shared/models/user.model';
 
 export interface UserState extends EntityState<User> {
@@ -12,7 +13,7 @@ export const userInitialState: UserState = adapter.getInitialState({
   selectedUser: undefined,
 });
 
-export const USERS_STATE_NAME = 'users';
+export const USERS_STATE_NAME = Features.User;
 
 const getUsersState = createFeatureSelector<UserState>(USERS_STATE_NAME);
 

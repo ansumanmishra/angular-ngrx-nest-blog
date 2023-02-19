@@ -102,5 +102,7 @@ export class UsersComponent {
     this.router.navigate(['users/edit', id]);
   }
 
-  deleteUser(id: string) {}
+  deleteUser(id: string) {
+    this.userService.deleteEnter(id);
+  }
 }

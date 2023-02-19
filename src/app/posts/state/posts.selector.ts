@@ -8,7 +8,6 @@ export const {
   reducer,
   selectPostMesage,
   selectPosts,
-  selectPostsState,
   selectSelectedPostId,
 } = postsFeature;
 

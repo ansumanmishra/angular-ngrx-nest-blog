@@ -70,7 +70,7 @@ export class AddUserComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.store.dispatch(userActions.getSelectedUser());
 
     this.store.select(selectedUser).subscribe((user) => {

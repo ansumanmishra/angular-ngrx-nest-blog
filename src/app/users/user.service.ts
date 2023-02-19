@@ -46,4 +46,8 @@ export class UserService {
   getSelectedUser(id: number): Observable<User> {
     return this.http.get<User>(environment.baseUrl + '/user/' + id);
   }
+
+  deleteEnter(id: string) {
+    throw new Error('Method not implemented.');
+  }
 }
