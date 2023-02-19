@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { Post } from '../shared/models/post.model';
+import { Post, PostsWithUser } from '../shared/models/post.model';
 import { RouterStateUrl } from '../store/router/custom-route-serializer';
 import { PostsService } from './posts.service';
 
@@ -16,6 +16,7 @@ import { PostsService } from './posts.service';
             <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
               <mat-card-title>{{ post.article }}</mat-card-title>
+              <mat-card-subtitle>{{ post.username }}</mat-card-subtitle>
             </mat-card-header>
 
             <mat-card-content>
@@ -59,7 +60,7 @@ import { PostsService } from './posts.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsComponent implements OnInit {
-  posts$!: Observable<Post[]>;
+  posts$: Observable<PostsWithUser[]> = this.postsService.postsWithUsers$;
   routeDetails$!: Observable<RouterStateUrl>;
   form!: FormGroup;
   selectedPost$ = this.postsService.selectedPost$;
@@ -72,7 +73,6 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.posts$ = this.postsService.getAllPosts();
     this.routeDetails$ = this.postsService.getRoutes();
 
     this.postsService.postMessage$.subscribe((msg) => {

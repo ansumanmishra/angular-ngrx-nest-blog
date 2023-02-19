@@ -1,5 +1,10 @@
-export class Post {
-    constructor(public article: string, public desc: string, public userId: number, public id?: number | undefined) {
+export interface Post {
+  article: string;
+  desc: string;
+  userId: number;
+  id?: number | undefined;
+}
 
-    }
+export interface PostsWithUser extends Post {
+  username: string | undefined;
 }

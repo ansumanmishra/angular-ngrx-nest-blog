@@ -91,9 +91,7 @@ export class UsersComponent {
     private readonly store: Store<UserState>,
     private readonly userService: UserService,
     private readonly router: Router
-  ) {
-    this.store.dispatch(loadUser());
-  }
+  ) {}
 
   viewPosts(user: User) {
     // console.log(post);

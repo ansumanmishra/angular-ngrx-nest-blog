@@ -1,5 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { Post } from 'src/app/shared/models/post.model';
+import { Observable } from 'rxjs';
+import { Post, PostsWithUser } from 'src/app/shared/models/post.model';
+import { selectAllUsers } from 'src/app/users/state/user.state';
 import { postsFeature } from './posts.reducer';
 
 export const {
@@ -15,6 +17,19 @@ export const selectedPost = createSelector(
   selectPosts,
   selectSelectedPostId,
   (posts, id) => posts.find((post: Post) => post.id === id)
+);
+
+export const postsWithusers = createSelector(
+  selectPosts,
+  selectAllUsers,
+  (posts, users) => {
+    return posts.map((post) => {
+      return {
+        ...post,
+        username: users.find((user) => +user.id === +post.userId)?.name,
+      } as PostsWithUser;
+    });
+  }
 );
 
 // OLD Selectors without using createFeature API
