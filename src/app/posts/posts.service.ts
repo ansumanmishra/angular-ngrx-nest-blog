@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Post, PostsWithUser } from '../shared/models/post.model';
 import { AppState } from '../store/app.state';
@@ -9,6 +9,7 @@ import { RouterStateUrl } from '../store/router/custom-route-serializer';
 import { getCurrentRoute } from '../store/router/router.selector';
 import { deletePost, PostPageActions } from './state/posts.actions';
 import {
+  postsByUserId,
   postsWithusers,
   selectedPost,
   selectPostMesage,
@@ -18,11 +19,18 @@ import {
   providedIn: 'root',
 })
 export class PostsService {
-  posts$ = this.store.select(selectPosts);
-  postsWithUsers$: Observable<PostsWithUser[]> =
-    this.store.select(postsWithusers);
   postMessage$ = this.store.select(selectPostMesage);
   selectedPost$ = this.store.select(selectedPost);
+
+  private userSelectedSubject$ = new BehaviorSubject<number>(0);
+
+  postsForSelectedUserId$ = this.userSelectedSubject$.pipe(
+    switchMap((userId) =>
+      userId
+        ? this.store.select(postsByUserId(userId))
+        : this.store.select(postsWithusers)
+    )
+  );
 
   constructor(
     private readonly store: Store<AppState>,
@@ -75,5 +83,9 @@ export class PostsService {
 
   cancelEdit(): void {
     this.store.dispatch(PostPageActions.cancelEdit());
+  }
+
+  onUserSelected(userId: number) {
+    this.userSelectedSubject$.next(userId);
   }
 }

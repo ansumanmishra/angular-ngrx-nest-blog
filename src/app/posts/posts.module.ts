@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { MaterialModule } from '../shared/material.module';
+import { Snackbar } from '../shared/snackbar.directive';
 import { ManagePostsComponent } from './manage-posts/manage-posts.component';
 import { PostsComponent } from './posts.component';
 import { PostsEffects } from './state/posts.effects';
@@ -22,7 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [PostsComponent, ManagePostsComponent],
+  declarations: [PostsComponent, ManagePostsComponent, Snackbar],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

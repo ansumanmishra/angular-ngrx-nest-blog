@@ -46,6 +46,10 @@ import { PostsService } from './posts.service';
     <h4>Current route details:</h4>
     {{ routeDetails$ | async | json }}
 
+    <app-snackbar
+      *ngIf="postMessage$ | async as message"
+      [message]="message"
+    ></app-snackbar>
     <router-outlet></router-outlet>
   `,
   styles: [
@@ -60,10 +64,11 @@ import { PostsService } from './posts.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsComponent implements OnInit {
-  posts$: Observable<PostsWithUser[]> = this.postsService.postsWithUsers$;
+  posts$ = this.postsService.postsForSelectedUserId$;
   routeDetails$!: Observable<RouterStateUrl>;
   form!: FormGroup;
   selectedPost$ = this.postsService.selectedPost$;
+  postMessage$ = this.postsService.postMessage$;
 
   constructor(
     private readonly postsService: PostsService,
@@ -74,12 +79,7 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.routeDetails$ = this.postsService.getRoutes();
-
-    this.postsService.postMessage$.subscribe((msg) => {
-      if (msg) {
-        this.snackBar.open(msg!, undefined, { duration: 2000 });
-      }
-    });
+    // this.postsService.onUserSelected(3);
   }
 
   createPost(post: Post) {
