@@ -47,7 +47,13 @@ export class UserService {
     return this.http.get<User>(environment.baseUrl + '/user/' + id);
   }
 
-  deleteEnter(id: string) {
-    throw new Error('Method not implemented.');
+  deleteEnter(userId: number) {
+    return this.store.dispatch(userActions.deleteUser({ userId }));
+  }
+
+  deleteUser(userId: number): Observable<boolean> {
+    return this.http.delete<boolean>(
+      environment.baseUrl + '/deleteUser/' + userId
+    );
   }
 }

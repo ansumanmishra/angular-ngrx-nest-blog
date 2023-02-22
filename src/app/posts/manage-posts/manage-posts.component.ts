@@ -18,7 +18,6 @@ import { User } from 'src/app/shared/models/user.model';
     <form action="" [formGroup]="form" (ngSubmit)="createPost()">
       <mat-card>
         <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title>Create a new article</mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -61,7 +60,79 @@ import { User } from 'src/app/shared/models/user.model';
       </mat-card>
     </form>
   `,
-  styles: [],
+  styles: [
+    `
+      mat-card {
+        width: 100%;
+        margin: 0;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      }
+
+      mat-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        background-color: #eee;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
+      mat-card-title {
+        font-size: 24px;
+        margin: 0;
+      }
+
+      mat-card-subtitle {
+        font-size: 14px;
+        color: #666;
+        margin: 0;
+      }
+
+      mat-form-field {
+        width: 100%;
+        margin: 16px;
+      }
+
+      mat-label {
+        font-size: 16px;
+        color: #333;
+      }
+
+      mat-icon {
+        color: #666;
+      }
+
+      mat-card-actions {
+        padding: 16px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      button {
+        margin-left: 8px;
+      }
+
+      button[color='primary'] {
+        color: #fff;
+        background-color: #007bff;
+      }
+
+      button[color='primary']:hover {
+        background-color: #0062cc;
+      }
+
+      button[color='warn'] {
+        color: #fff;
+        background-color: #dc3545;
+      }
+
+      button[color='warn']:hover {
+        background-color: #c82333;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManagePostsComponent implements OnInit, OnChanges {

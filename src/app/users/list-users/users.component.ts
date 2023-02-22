@@ -1,18 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Post } from '../../shared/models/post.model';
 
 import { User } from '../../shared/models/user.model';
-import { AppState } from '../../store/app.state';
-import { loadUser } from '../state/user.action';
-import {
-  selectAll,
-  selectAllUsers,
-  selectTotal,
-  UserState,
-} from '../state/user.state';
 import { UserService } from '../user.service';
 
 @Component({
@@ -67,17 +57,51 @@ import { UserService } from '../user.service';
       .table {
         width: 100%;
         border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
       }
 
       .table th,
-      td {
-        border: 1px solid black;
+      .table td {
         padding: 8px;
         text-align: left;
+        vertical-align: top;
+        border: 1px solid #ddd;
       }
 
       .table th {
         background-color: #f2f2f2;
+        font-weight: bold;
+        color: #444;
+        text-transform: uppercase;
+      }
+
+      .table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .mat-icon {
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+
+      button {
+        cursor: pointer;
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: transparent;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        color: #444;
+        font-size: 14px;
+        font-weight: normal;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+      }
+
+      button:hover {
+        background-color: #f9f9f9;
       }
     `,
   ],
@@ -88,7 +112,6 @@ export class UsersComponent {
   dataSource$: Observable<User[]> = this.userService.users$;
 
   constructor(
-    private readonly store: Store<UserState>,
     private readonly userService: UserService,
     private readonly router: Router
   ) {}
@@ -102,7 +125,7 @@ export class UsersComponent {
     this.router.navigate(['users/edit', id]);
   }
 
-  deleteUser(id: string) {
+  deleteUser(id: number) {
     this.userService.deleteEnter(id);
   }
 }

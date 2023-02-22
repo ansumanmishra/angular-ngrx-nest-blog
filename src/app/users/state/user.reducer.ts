@@ -1,7 +1,7 @@
 import { UpdateNum } from '@ngrx/entity/src/models';
 import { createReducer, on } from '@ngrx/store';
 import { User } from 'src/app/shared/models/user.model';
-import { loadUsersSuccess, userActions } from './user.action';
+import { loadUsersSuccess, userActions, userApiActions } from './user.action';
 import { adapter, userInitialState } from './user.state';
 
 export const userReducer = createReducer(
@@ -24,6 +24,9 @@ export const userReducer = createReducer(
       changes: action.user,
     };
     return adapter.updateOne(update, state);
+  }),
+  on(userApiActions.deleteUserSuccess, (state, action) => {
+    return adapter.removeOne(action.userId, state);
   })
 
   // OLD WAY

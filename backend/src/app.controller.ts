@@ -47,4 +47,9 @@ export class AppController {
   async deletePost(@Param() param) {
     return this.appService.deletePost(param.id);
   }
+
+  @Delete('deleteUser/:userId')
+  async deleteUser(@Param() param) {
+    return this.appService.deleteUser(param.userId);
+  }
 }

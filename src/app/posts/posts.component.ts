@@ -15,7 +15,6 @@ import { PostsService } from './posts.service';
         <ng-container *ngIf="posts$ | async as posts">
           <mat-card class="example-card" *ngFor="let post of posts">
             <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
               <mat-card-title>{{ post.article }}</mat-card-title>
               <mat-card-subtitle>{{ post.username }}</mat-card-subtitle>
             </mat-card-header>
@@ -45,8 +44,8 @@ import { PostsService } from './posts.service';
 
     <!-- <button mat-raised-button color="primary" [routerLink]="['/add-post']"> Add a New Post</button> -->
 
-    <h4>Current route details:</h4>
-    {{ routeDetails$ | async | json }}
+    <!-- <h4>Current route details:</h4>
+    {{ routeDetails$ | async | json }} -->
 
     <app-snackbar
       *ngIf="postMessage$ | async as message"
@@ -56,10 +55,71 @@ import { PostsService } from './posts.service';
   `,
   styles: [
     `
-      .example-card {
-        border: 1px solid #d7c9c9;
-        border-radius: 3px;
-        margin-bottom: 20px;
+      mat-card {
+        width: 100%;
+        margin: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      }
+
+      mat-card-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 16px;
+        background-color: #eee;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
+      mat-card-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      mat-card-subtitle {
+        font-size: 14px;
+        color: #666;
+        margin: 0;
+      }
+
+      img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      mat-card-content {
+        padding: 16px;
+      }
+
+      mat-card-actions {
+        padding: 16px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      button {
+        margin-left: 8px;
+      }
+
+      button[color='primary'] {
+        color: #fff;
+        background-color: #007bff;
+      }
+
+      button[color='primary']:hover {
+        background-color: #0062cc;
+      }
+
+      button[color='warn'] {
+        color: #fff;
+        background-color: #dc3545;
+      }
+
+      button[color='warn']:hover {
+        background-color: #c82333;
       }
     `,
   ],

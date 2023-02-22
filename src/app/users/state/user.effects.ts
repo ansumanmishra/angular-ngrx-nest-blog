@@ -22,6 +22,7 @@ import {
   loadUser,
   loadUsersSuccess,
   userActions,
+  userApiActions,
 } from './user.action';
 import { selectAllUsers } from './user.state';
 
@@ -93,6 +94,26 @@ export class UserEffects {
           }),
           catchError((err) =>
             of(userActions.editUserFailure({ error: 'Failed to update user' }))
+          )
+        );
+      })
+    );
+  });
+
+  deleteUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(userActions.deleteUser),
+      mergeMap((action) => {
+        return this.userService.deleteUser(action.userId).pipe(
+          map((data) =>
+            userApiActions.deleteUserSuccess({ userId: action.userId })
+          ),
+          catchError((err) =>
+            of(
+              userApiActions.deleteUserFailure({
+                error: 'Failed to delete user',
+              })
+            )
           )
         );
       })

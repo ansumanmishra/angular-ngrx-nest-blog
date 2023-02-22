@@ -27,6 +27,15 @@ export const userActions = createActionGroup({
     'Edit User Enter': props<{ user: User }>(),
     'Edit User Success': props<{ user: User }>(),
     'Edit User Failure': props<{ error: string }>(),
+    'Delete User': props<{ userId: number }>(),
+  },
+});
+
+export const userApiActions = createActionGroup({
+  source: 'Users API',
+  events: {
+    'Delete User Success': props<{ userId: number }>(),
+    'Delete User Failure': props<{ error: string }>(),
   },
 });
 
