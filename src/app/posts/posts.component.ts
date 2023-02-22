@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { Post, PostsWithUser } from '../shared/models/post.model';
+import { Post } from '../shared/models/post.model';
 import { RouterStateUrl } from '../store/router/custom-route-serializer';
+import { UserService } from '../users/user.service';
 import { PostsService } from './posts.service';
 
 @Component({
@@ -35,6 +36,7 @@ import { PostsService } from './posts.service';
       <div>
         <app-manage-posts
           [selectedPost]="selectedPost$ | async"
+          [users]="users$ | async"
           (cancelEditEvent)="cancelEditPost()"
           (createPostEvent)="createPost($event)"
         ></app-manage-posts>
@@ -69,10 +71,12 @@ export class PostsComponent implements OnInit {
   form!: FormGroup;
   selectedPost$ = this.postsService.selectedPost$;
   postMessage$ = this.postsService.postMessage$;
+  users$ = this.userService.users$;
 
   constructor(
     private readonly postsService: PostsService,
-    private readonly snackBar: MatSnackBar
+    private readonly snackBar: MatSnackBar,
+    private readonly userService: UserService
   ) {
     this.postsService.getPostsAction();
   }

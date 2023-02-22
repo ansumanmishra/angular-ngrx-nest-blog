@@ -99,8 +99,6 @@ export class AppService {
 
   createPost(post: any) {
     post.id = posts.length + 1;
-    post.userId = 2;
-
     posts.push(post);
 
     return posts;
@@ -111,6 +109,7 @@ export class AppService {
     if (isPostExist) {
       isPostExist.article = post.article;
       isPostExist.desc = post.desc;
+      isPostExist.userId = post.userId;
     }
   }
 

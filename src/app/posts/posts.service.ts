@@ -53,7 +53,7 @@ export class PostsService {
     const post: Post = {
       article: formValue.article,
       desc: formValue.desc,
-      userId: 2,
+      userId: formValue.userId,
       id: formValue?.id,
     };
     this.store.dispatch(PostPageActions.createPost({ post }));

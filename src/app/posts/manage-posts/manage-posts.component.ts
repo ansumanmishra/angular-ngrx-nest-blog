@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from 'src/app/shared/models/post.model';
+import { User } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-manage-posts',
@@ -38,6 +39,16 @@ import { Post } from 'src/app/shared/models/post.model';
               <textarea matInput rows="5" formControlName="desc"></textarea>
             </mat-form-field>
           </p>
+          <p>
+            <mat-form-field>
+              <mat-label>Select User</mat-label>
+              <mat-select formControlName="userId">
+                <mat-option *ngFor="let user of users" [value]="user.id">
+                  {{ user.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </p>
         </mat-card-content>
         <mat-card-actions>
           <button mat-button type="submit" [disabled]="!form.valid">
@@ -57,6 +68,7 @@ export class ManagePostsComponent implements OnInit, OnChanges {
   form!: FormGroup;
 
   @Input() selectedPost!: Post | null | undefined;
+  @Input() users!: User[] | null;
   @Output() cancelEditEvent: EventEmitter<void> = new EventEmitter();
   @Output() createPostEvent: EventEmitter<Post> = new EventEmitter();
 
@@ -80,6 +92,7 @@ export class ManagePostsComponent implements OnInit, OnChanges {
       id: [''],
       article: ['', Validators.required],
       desc: ['', Validators.required],
+      userId: ['', Validators.required],
     });
   }
 
@@ -89,12 +102,14 @@ export class ManagePostsComponent implements OnInit, OnChanges {
         id: this.selectedPost?.id,
         article: this.selectedPost?.article,
         desc: this.selectedPost?.desc,
+        userId: this.selectedPost?.userId,
       });
     } else {
       this.form.setValue({
         id: '',
         article: '',
         desc: '',
+        userId: '',
       });
     }
   }
