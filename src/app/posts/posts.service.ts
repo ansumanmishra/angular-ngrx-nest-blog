@@ -1,39 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, of, Subject, switchMap } from 'rxjs';
+import { BehaviorSubject, delay, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Post, PostsWithUser } from '../shared/models/post.model';
-import { AppState } from '../store/app.state';
+import { Post } from '../shared/models/post.model';
 import { RouterStateUrl } from '../store/router/custom-route-serializer';
 import { getCurrentRoute } from '../store/router/router.selector';
 import { deletePost, PostPageActions } from './state/posts.actions';
-import {
-  postsByUserId,
-  postsWithusers,
-  selectedPost,
-  selectPostMesage,
-  selectPosts,
-} from './state/posts.selector';
+import { PostState } from './state/posts.reducer';
+import { postsViewModel } from './state/posts.selector';
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  postMessage$ = this.store.select(selectPostMesage);
-  selectedPost$ = this.store.select(selectedPost);
-
+  postsViewModel$ = this.store.select(postsViewModel);
   private userSelectedSubject$ = new BehaviorSubject<number>(0);
 
-  postsForSelectedUserId$ = this.userSelectedSubject$.pipe(
-    switchMap((userId) =>
-      userId
-        ? this.store.select(postsByUserId(userId))
-        : this.store.select(postsWithusers)
-    )
-  );
+  //   postsForSelectedUserId$ = this.userSelectedSubject$.pipe(
+  //     switchMap((userId) =>
+  //       userId
+  //         ? this.store.select(postsByUserId(userId))
+  //         : this.store.select(postsWithusers)
+  //     )
+  //   );
 
   constructor(
-    private readonly store: Store<AppState>,
+    private readonly store: Store<PostState>,
     private readonly http: HttpClient
   ) {}
 
@@ -42,7 +34,9 @@ export class PostsService {
   }
 
   getPostsFromApi(): Observable<Post[]> {
-    return this.http.get<Post[]>(environment.baseUrl + '/posts');
+    return this.http
+      .get<Post[]>(environment.baseUrl + '/posts')
+      .pipe(delay(1000));
   }
 
   getRoutes(): Observable<RouterStateUrl> {

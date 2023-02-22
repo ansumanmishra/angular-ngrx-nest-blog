@@ -8,25 +8,34 @@ import {
   loadPostsSuccess,
   PostPageActions,
 } from './posts.actions';
-interface PostState {
+export interface PostState {
   posts: Post[];
   postMesage: string | null;
   selectedPostId: number;
+  loading: boolean;
 }
 
 const initialStatePosts: PostState = {
   posts: [],
   postMesage: null,
   selectedPostId: 0,
+  loading: false,
 };
 
 const postsReducer = createReducer(
   initialStatePosts,
+  on(PostPageActions.loadPosts, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
   on(loadPostsSuccess, (state, action) => {
     return {
       ...state,
       posts: action.posts,
       postMesage: null,
+      loading: false,
     };
   }),
   on(createPostSuccess, (state, action) => {

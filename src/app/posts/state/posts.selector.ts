@@ -8,6 +8,7 @@ export const {
   reducer,
   selectPostMesage,
   selectPosts,
+  selectLoading,
   selectSelectedPostId,
 } = postsFeature;
 
@@ -35,6 +36,21 @@ export const postsByUserId = (userId: number) => {
     posts.filter((post) => post.userId === userId)
   );
 };
+
+export const postsViewModel = createSelector(
+  postsWithusers,
+  selectLoading,
+  selectPostMesage,
+  selectAllUsers,
+  selectedPost,
+  (posts, loading, message, users, selectedPost) => ({
+    posts,
+    loading,
+    message,
+    users,
+    selectedPost,
+  })
+);
 
 // OLD Selectors without using createFeature API
 
