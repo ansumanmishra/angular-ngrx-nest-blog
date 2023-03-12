@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, map, of } from 'rxjs';
+import { catchError, exhaustMap, map, of, tap } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { AuthActions } from './auth.actions';
 
@@ -8,7 +9,8 @@ import { AuthActions } from './auth.actions';
 export class AuthEffects {
   constructor(
     private readonly actions$: Actions,
-    private readonly auth: AuthService
+    private readonly auth: AuthService,
+    private readonly router: Router
   ) {}
 
   loginEnter$ = createEffect(() => {
@@ -26,4 +28,14 @@ export class AuthEffects {
       })
     );
   });
+
+  loginSuccess$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AuthActions.loginSuccess),
+        tap((_) => this.router.navigate(['users']))
+      );
+    },
+    { dispatch: false }
+  );
 }
