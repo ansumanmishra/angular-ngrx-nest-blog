@@ -18,6 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserContainerComponent } from './users/user-container.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthEffects } from './auth/state/auth.effects';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { UserContainerComponent } from './users/user-container.component';
     UserContainerComponent,
     HeaderComponent,
     AddUserComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,7 @@ import { UserContainerComponent } from './users/user-container.component';
     AppRoutingModule,
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([AuthEffects, UserEffects]),
     StoreRouterConnectingModule.forRoot({
       serializer: CustomSerializer,
     }),

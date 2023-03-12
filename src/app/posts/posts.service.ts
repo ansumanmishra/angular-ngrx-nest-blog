@@ -9,6 +9,7 @@ import { getCurrentRoute } from '../store/router/router.selector';
 import { deletePost, PostPageActions } from './state/posts.actions';
 import { PostState } from './state/posts.reducer';
 import { postsViewModel } from './state/posts.selector';
+
 @Injectable({
   providedIn: 'root',
 })
