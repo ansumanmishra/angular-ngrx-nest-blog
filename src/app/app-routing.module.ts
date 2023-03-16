@@ -4,11 +4,13 @@ import { AddUserComponent } from './users/add-user/add-user.component';
 import { UserContainerComponent } from './users/user-container.component';
 import { UsersComponent } from './users/list-users/users.component';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
     path: 'users',
     component: UserContainerComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -30,6 +32,7 @@ const routes: Routes = [
   },
   {
     path: 'posts',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./posts/posts.module').then((m) => m.PostsModule),
   },

@@ -16,11 +16,10 @@ const initialState: AuthState = {
 export const AUTH_STATE_NAME = 'auth';
 export const AuthReducer = createReducer(
   initialState,
-  on(AuthActions.loginSuccess, (state, { token }) => {
-    console.log('AuthActions.loginsuccess', token);
+  on(AuthActions.loginSuccess, (state, { user }) => {
     return {
       ...state,
-      token,
+      ...user,
     };
   })
 );

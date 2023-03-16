@@ -13,13 +13,38 @@ export class AuthEffects {
     private readonly router: Router
   ) {}
 
+  pageEnter$ = createEffect(
+    () => {
+      console.log('hiee');
+
+      return this.actions$.pipe(
+        ofType(AuthActions.pageEnter),
+        tap((_) => {
+          console.log('hi');
+          const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+          console.log(user);
+
+          if (user.name && user.email && user.token) {
+            this.router.navigate(['users']);
+          }
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   loginEnter$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AuthActions.loginEnter),
       exhaustMap((action) => {
         const { email, password } = action;
         return this.auth.login(email, password).pipe(
-          map((user) => AuthActions.loginSuccess({ token: user.token })),
+          map((user) => {
+            // store the user details and token in session storage
+            // to keep user logged in between page refreshes
+            sessionStorage.setItem('user', JSON.stringify(user));
+            return AuthActions.loginSuccess({ user });
+          }),
           catchError((err) => {
             console.error('Something went wrong!');
             return of(AuthActions.loginFailure({ error: err }));
@@ -28,6 +53,16 @@ export class AuthEffects {
       })
     );
   });
+
+  logout$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AuthActions.logout),
+        tap((_) => this.router.navigate(['login']))
+      );
+    },
+    { dispatch: false } // Don't dispatch any actions
+  );
 
   loginSuccess$ = createEffect(
     () => {
