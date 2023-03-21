@@ -17,6 +17,9 @@ import { AuthService } from './auth.service';
       </mat-form-field>
 
       <button mat-raised-button type="submit">Login</button>
+      <mat-error *ngIf="authError$ | async as authError">
+        {{ authError.error }}
+      </mat-error>
     </form>
   `,
   styles: [
@@ -44,6 +47,7 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit {
   loginForm!: FormGroup;
+  authError$ = this.auth.authError$;
 
   constructor(private formBuilder: FormBuilder, private auth: AuthService) {}
 

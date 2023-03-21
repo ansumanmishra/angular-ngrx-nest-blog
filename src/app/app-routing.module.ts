@@ -32,7 +32,6 @@ const routes: Routes = [
   },
   {
     path: 'posts',
-    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./posts/posts.module').then((m) => m.PostsModule),
   },

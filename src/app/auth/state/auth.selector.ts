@@ -13,3 +13,7 @@ export const userData = createSelector(authSelector, (state: AuthState) => ({
   email: state.email,
   token: state.token,
 }));
+
+export const authError = createSelector(authSelector, (state: AuthState) => ({
+  error: state.error,
+}));

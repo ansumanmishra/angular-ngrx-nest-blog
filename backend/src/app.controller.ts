@@ -52,4 +52,9 @@ export class AppController {
   async deleteUser(@Param() param) {
     return this.appService.deleteUser(param.userId);
   }
+
+  @Post('/auth')
+  async authorize(@Body() body) {
+    return this.appService.getLoggedInUserData(body.email, body.password);
+  }
 }

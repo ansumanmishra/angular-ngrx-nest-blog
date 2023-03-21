@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { throwError } from 'rxjs';
 
 const users = [
   { id: 1, name: 'John Doe', age: 30 },
@@ -48,6 +53,19 @@ const posts = [
 
 @Injectable()
 export class AppService {
+  getLoggedInUserData(email: string, password: string) {
+    if (email !== 'test@test.com' && password !== 'test') {
+      throw new UnauthorizedException(
+        'Invalid login, Username or Password is wrong',
+      );
+    }
+    return {
+      name: 'John Doe',
+      email: 'john@test.com',
+      token: 'token',
+    };
+  }
+
   deleteUser(userId: any) {
     const index = users.findIndex((p) => p.id === +userId);
     if (index > -1) {

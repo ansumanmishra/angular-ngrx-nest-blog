@@ -15,14 +15,10 @@ export class AuthEffects {
 
   pageEnter$ = createEffect(
     () => {
-      console.log('hiee');
-
       return this.actions$.pipe(
         ofType(AuthActions.pageEnter),
         tap((_) => {
-          console.log('hi');
           const user = JSON.parse(sessionStorage.getItem('user') || '{}');
-          console.log(user);
 
           if (user.name && user.email && user.token) {
             this.router.navigate(['users']);
@@ -46,8 +42,7 @@ export class AuthEffects {
             return AuthActions.loginSuccess({ user });
           }),
           catchError((err) => {
-            console.error('Something went wrong!');
-            return of(AuthActions.loginFailure({ error: err }));
+            return of(AuthActions.loginFailure({ error: err.error.message }));
           })
         );
       })
