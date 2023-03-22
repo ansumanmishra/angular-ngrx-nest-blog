@@ -6,13 +6,16 @@ import { AuthService } from 'src/app/auth/auth.service';
   template: `
     <p>
       <mat-toolbar color="primary">
-        <span>NGRX Angular Blog</span>
+        <span
+          ><a routerLink="/" style="color: #ffffff;">NGRX Angular Blog</a></span
+        >
         <span class="example-spacer"></span>
         <button
           mat-button
           class="example-icon favorite-icon"
           aria-label="Users"
           routerLink="users"
+          *ngIf="(loggedInUser$ | async)?.name"
         >
           Users
         </button>
@@ -28,10 +31,15 @@ import { AuthService } from 'src/app/auth/auth.service';
         <button
           mat-icon-button
           (click)="logout()"
-          *ngIf="(loggedInUser$ | async)?.name"
+          *ngIf="(loggedInUser$ | async)?.name; else login"
         >
           <mat-icon>logout</mat-icon>
         </button>
+        <ng-template #login>
+          <button mat-icon-button routerLink="/login">
+            <mat-icon>login</mat-icon>
+          </button>
+        </ng-template>
       </mat-toolbar>
     </p>
   `,

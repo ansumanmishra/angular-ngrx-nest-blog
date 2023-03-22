@@ -30,5 +30,13 @@ export const AuthReducer = createReducer(
       ...state,
       error,
     };
+  }),
+  on(AuthActions.logout, (state) => {
+    return {
+      ...state,
+      name: '',
+      email: '',
+      token: '',
+    };
   })
 );
