@@ -7,7 +7,9 @@ import { AuthService } from 'src/app/auth/auth.service';
     <p>
       <mat-toolbar color="primary">
         <span
-          ><a routerLink="/" style="color: #ffffff;">NGRX Angular Blog</a></span
+          ><a routerLink="/" style="color: #ffffff; text-decoration: none;"
+            >NGRX Angular Blog</a
+          ></span
         >
         <span class="example-spacer"></span>
         <button
